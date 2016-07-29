@@ -1,15 +1,14 @@
+package jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class JDBCTestCount {
+public class JDBCTestUpdate {
 
 	public static void main(String[] args) {
 		Connection conn= null;
 		Statement stmt = null;
-		ResultSet rs = null;
 		
 		try {
 			//1.드라이버 로딩
@@ -17,21 +16,17 @@ public class JDBCTestCount {
 			
 			//2.연결 얻어오기
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			conn = DriverManager.getConnection(url,"hr","hr");
+			conn = DriverManager.getConnection(url,"skudb","skudb");
 			
 			//3. statement 샐성
 			stmt = conn.createStatement();  //갯수를 반환
 			
 			//4.SQL문 실행
-			String sql= "select count(*) from employees";
+			String sql= "update author set name = '순자' where no= 5";
 			
-			rs = stmt.executeQuery(sql);
+			int count = stmt.executeUpdate(sql);
 			
-			//5. 결과 처리
-			if( rs.next() ) {
-				int count = rs.getInt( 1 );
-				System.out.println( "전체 " + count + "개의 row가 있습니다.");
-			}
+			System.out.println(count+"개의 row가 수정되었습니다");	
 			
 		} catch (ClassNotFoundException e) {
 
@@ -41,9 +36,6 @@ public class JDBCTestCount {
 		} finally {
 			try{
 				//6.자원정리
-				if(rs != null){
-					rs.close();
-				}
 				if(stmt != null){
 					stmt.close();
 				}
@@ -54,7 +46,6 @@ public class JDBCTestCount {
 				System.out.println("error: "+e);
 			}
 		}
-
 	}
 
 }

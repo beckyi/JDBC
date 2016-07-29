@@ -1,10 +1,11 @@
+package jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class JDBCTestDelete {
+public class JDBCTestCount {
 
 	public static void main(String[] args) {
 		Connection conn= null;
@@ -17,17 +18,21 @@ public class JDBCTestDelete {
 			
 			//2.연결 얻어오기
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			conn = DriverManager.getConnection(url,"skudb","skudb");
+			conn = DriverManager.getConnection(url,"hr","hr");
 			
 			//3. statement 샐성
 			stmt = conn.createStatement();  //갯수를 반환
 			
 			//4.SQL문 실행
-			String sql= "delete from author where no= '5'";
+			String sql= "select count(*) from employees";
 			
-			int count = stmt.executeUpdate(sql);
+			rs = stmt.executeQuery(sql);
 			
-			System.out.println(count+"개의 row가 삭제되었습니다");
+			//5. 결과 처리
+			if( rs.next() ) {
+				int count = rs.getInt( 1 );
+				System.out.println( "전체 " + count + "개의 row가 있습니다.");
+			}
 			
 		} catch (ClassNotFoundException e) {
 
@@ -39,6 +44,9 @@ public class JDBCTestDelete {
 				//6.자원정리
 				if(rs != null){
 					rs.close();
+				}
+				if(stmt != null){
+					stmt.close();
 				}
 				if(conn != null){
 					conn.close();

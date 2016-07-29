@@ -1,10 +1,11 @@
+package jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class JDBCTestInsert {
+public class JDBCTest {
 
 	public static void main(String[] args) {
 		Connection conn= null;
@@ -17,19 +18,27 @@ public class JDBCTestInsert {
 			
 			//2.연결 얻어오기
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			conn = DriverManager.getConnection(url,"skudb","skudb");
-			
+			conn = DriverManager.getConnection(url,"hr","hr");
 			//3. statement 샐성
-			stmt = conn.createStatement();  //갯수를 반환
-			
+			stmt = conn.createStatement();
 			//4.SQL문 실행
-			String sql= "insert into author values(6,'맹자',null)";
+			String sql= "select employee_id,"+"	first_name,"+"	last_name,"+"	salary"+"	from employees";
 			
-			int count = stmt.executeUpdate(sql);
-			
-			System.out.println(count+"개의 row가 입력되었습니다");	
+			//5.결과처리
+			rs = stmt.executeQuery(sql);
+
+			while(rs.next()){
+				int employee_id =rs.getInt(1);
+				String firstName =  rs.getString(2);
+				String lastName =  rs.getString(3);
+				int salary =rs.getInt(4);
+				
+				System.out.println(employee_id+": "+firstName+" "+lastName+": "+salary);
+			}
 			
 		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
 			System.out.println("드라이버 로딩 실패: "+e);
 		} catch (SQLException e) {
 			System.out.println("error: "+e);
@@ -48,5 +57,4 @@ public class JDBCTestInsert {
 			}
 		}
 	}
-
 }
