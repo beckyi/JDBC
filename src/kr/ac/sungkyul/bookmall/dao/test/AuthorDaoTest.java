@@ -29,23 +29,19 @@ public class AuthorDaoTest {
 		AuthorVo vo = new AuthorVo();
 		AuthorDao dao = new AuthorDao();
 		
-		vo.setName("스테파니메이어");
+		vo.setName("생텍쥐페리");
 		vo.setDescription(null);
 		dao.insert(vo);
 		
-		vo.setName("조정래");
+		vo.setName("남궁성");
 		vo.setDescription(null);
 		dao.insert(vo);
 		
-		vo.setName("김동인");
+		vo.setName("채사장");
 		vo.setDescription(null);
 		dao.insert(vo);
 		
-		vo.setName("김난도");
-		vo.setDescription(null);
-		dao.insert(vo);
-		
-		vo.setName("원수연");
+		vo.setName("피천득");
 		vo.setDescription(null);
 		dao.insert(vo);
 	}
